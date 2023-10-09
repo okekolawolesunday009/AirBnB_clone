@@ -10,39 +10,36 @@ class FileStorage:
     __objects = {}
 
     @classmethod
-    def all(cls):
+    def all(self):
         """Returns the dictionary of all objects."""
-        return cls.__objects
+        return self.__objects
 
     @classmethod
-    def new(cls, obj):
+    def new(self, obj):
         """Sets a new object in __objects."""
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        cls.__objects[key] = obj
+        self.__objects[key] = obj
 
     @classmethod
-    def save(cls):
+    def save(self):
         """Serializes __objects to JSON and saves to file."""
         serialized_objects = {}
-
-        print('save triggered')
-        for key, obj in cls.__objects.items():
-            print(obj)
+        for key, obj in self.__objects.items():
             serialized_objects[key] = obj.to_dict()
 
-        with open(cls.__file_path, 'w') as file:
+        with open(self.__file_path, 'w', encoding="UTF-8") as file:
             json.dump(serialized_objects, file)
 
     @classmethod
-    def reload(cls):
+    def reload(self):
         """Deserializes JSON file to __objects."""
         try:
-            with open(cls.__file_path, 'r') as file:
+            with open(self.__file_path, 'r') as file:
                 data = json.load(file)
                 for key, obj_data in data.items():
                     class_name, obj_id = key.split('.')
                     cls_name = eval(class_name)
                     obj_instance = cls_name(**obj_data)
-                    cls.__objects[key] = obj_instance
+                    self.__objects[key] = obj_instance
         except FileNotFoundError:
             pass
