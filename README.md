@@ -17,7 +17,7 @@ After 4 months, you will have a complete web application composed by:
 ##Cmd module
 -  The cmd module is mainly useful for building custom shells that let a user work with a program interactively.
 - example of processing commands
-
+```
 import cmd
 
 class HelloWorld(cmd.Cmd):
@@ -36,17 +36,14 @@ if __name__ == '__main__':
 $ python cmd_simple.py
 (Cmd) help
 
-- result 
 Undocumented commands:
 ======================
 EOF  greet  help
 
 (Cmd) greet
 
-- result 
 hello
-
-
+```
 
 ## Technologies used
 - python [cmd, Flask]
