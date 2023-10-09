@@ -14,7 +14,7 @@ After 4 months, you will have a complete web application composed by:
 - An API that provides a communication interface between the front-end and your data (retrieve, create, delete, update them)
 
 
-## Cmd module
+## cmd module
 -  The cmd module is mainly useful for building custom shells that let a user work with a program interactively.
 - example of processing commands
 
@@ -35,7 +35,7 @@ After 4 months, you will have a complete web application composed by:
 
     # running commandline
     
-    ![cmd_module](https://github.com/okekolawolesunday009/AirBnB_clone/blob/main/images/airbnb.png " cmd_module ")
+    ![cmd_module](https://github.com/okekolawolesunday009/AirBnB_clone/blob/main/images/code.jpg "cmd_module ")
 
 ```
 
