@@ -34,10 +34,9 @@ After 4 months, you will have a complete web application composed by:
         HelloWorld().cmdloop()
 
     # running commandline
-    
-    ![cmd_module](https://github.com/okekolawolesunday009/AirBnB_clone/blob/main/images/code.jpg "cmd_module ")
-
 ```
+
+    ![cmd_module](https://github.com/okekolawolesunday009/AirBnB_clone/blob/main/images/code.jpg "cmd_module ")
 
 ## Technologies used
 - python [cmd, Flask]
