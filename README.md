@@ -13,6 +13,41 @@ After 4 months, you will have a complete web application composed by:
 - A database or files that store data (data = objects)
 - An API that provides a communication interface between the front-end and your data (retrieve, create, delete, update them)
 
+
+##Cmd module
+-  The cmd module is mainly useful for building custom shells that let a user work with a program interactively.
+- example of processing commands
+
+import cmd
+
+class HelloWorld(cmd.Cmd):
+    """Simple command processor example."""
+    
+    def do_greet(self, line):
+        print "hello"
+    
+    def do_EOF(self, line):
+        return True
+
+if __name__ == '__main__':
+    HelloWorld().cmdloop()
+
+- running commandline
+$ python cmd_simple.py
+(Cmd) help
+
+- result 
+Undocumented commands:
+======================
+EOF  greet  help
+
+(Cmd) greet
+
+- result 
+hello
+
+
+
 ## Technologies used
 - python [cmd, Flask]
 - HTML
