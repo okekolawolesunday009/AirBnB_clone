@@ -1,7 +1,7 @@
 The AirBnB_clone
 ================
 
-![AirBnB_clone](put pics " AirBnB_clone")
+![AirBnB_clone](https://github.com/okekolawolesunday009/AirBnB_clone/blob/main/images/airbnb.png " AirBnB_clone")
 
 AirBnB_clone - The goal of the project is to deploy on your server a simple copy of the AirBnB website.
 
