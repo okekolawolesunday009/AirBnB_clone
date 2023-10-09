@@ -14,35 +14,29 @@ After 4 months, you will have a complete web application composed by:
 - An API that provides a communication interface between the front-end and your data (retrieve, create, delete, update them)
 
 
-##Cmd module
+## Cmd module
 -  The cmd module is mainly useful for building custom shells that let a user work with a program interactively.
 - example of processing commands
-```
-import cmd
 
-class HelloWorld(cmd.Cmd):
-    """Simple command processor example."""
+```python
+    import cmd
+
+    class HelloWorld(cmd.Cmd):
+        """Simple command processor example."""
+        
+        def do_greet(self, line):
+            print "hello"
+        
+        def do_EOF(self, line):
+            return True
+
+    if __name__ == '__main__':
+        HelloWorld().cmdloop()
+
+    # running commandline
     
-    def do_greet(self, line):
-        print "hello"
-    
-    def do_EOF(self, line):
-        return True
+    ![cmd_module](https://github.com/okekolawolesunday009/AirBnB_clone/blob/main/images/airbnb.png " cmd_module ")
 
-if __name__ == '__main__':
-    HelloWorld().cmdloop()
-
-- running commandline
-$ python cmd_simple.py
-(Cmd) help
-
-Undocumented commands:
-======================
-EOF  greet  help
-
-(Cmd) greet
-
-hello
 ```
 
 ## Technologies used
