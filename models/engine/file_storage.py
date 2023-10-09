@@ -24,7 +24,9 @@ class FileStorage:
     def save(self):
         """Serializes __objects to JSON and saves to file."""
         serialized_objects = {}
+        print('save triggered')
         for key, obj in self.__objects.items():
+            print(obj)
             serialized_objects[key] = obj.to_dict()
 
         with open(self.__file_path, 'w', encoding="UTF-8") as file:
