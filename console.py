@@ -124,6 +124,48 @@ class  HBNBCommand(cmd.Cmd):
         else:
             print("** invalid command format **")
 
+    def do_update(self, line):
+        """Update an instance based on the class name, id, attribute name, and value."""
+        args = line.split()
+        if not args:
+            print("** class name missing **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
+        else:
+            class_name = args[0]
+            if class_name in self.__classes: 
+                print("** class doesn't exist **")
+            else:
+                instance_id = args[1]
+                attribute_name = args[2]
+                attribute_value = args[3]
+
+                try:
+                    # Load instances from JSON file and find the one with the specified ID
+                    with open("file.json", "r") as file:
+                        data = json.load(file)
+                        key = "{}.{}".format(class_name, instance_id)
+                        if key in data:
+                            instance_dict = data[key]
+
+                            # Exclude prohibited attributes (id, created_at, updated_at)
+                            prohibited_attributes = ["id", "created_at", "updated_at"]
+                            if attribute_name in prohibited_attributes:
+                                print("** cannot update prohibited attribute **")
+                            else:
+                                instance_dict[attribute_name] = attribute_value
+                                data[key] = instance_dict
+
+                                with open("file.json", "w") as outfile:
+                                    json.dump(data, outfile)
+                        else:
+                            print("** no instance found **")
+                except FileNotFoundError:
+                    print("** no instance found **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
