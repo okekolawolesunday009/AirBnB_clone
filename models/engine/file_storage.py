@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Defines a base class for storage"""
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -8,6 +9,7 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
+    class_dict = {"BaseModel": BaseModel}
 
     @classmethod
     def all(self):
@@ -37,9 +39,10 @@ class FileStorage:
             with open(self.__file_path, 'r') as file:
                 data = json.load(file)
                 for key, obj_data in data.items():
-                    class_name, obj_id = key.split('.')
-                    cls_name = eval(class_name)
-                    obj_instance = cls_name(**obj_data)
-                    self.__objects[key] = obj_instance
+                    class_name = key.split('.')[0]
+                    obj_class = self.class_dict.get(class_name)
+                    if obj_class:
+                        obj_instance = obj_class(**obj_data)
+                        self.__objects[key] = obj_instance
         except FileNotFoundError:
             pass
