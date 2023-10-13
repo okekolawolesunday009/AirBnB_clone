@@ -10,14 +10,12 @@ class BaseModel:
         """
         Update attributes using positional arguments.
         Args:
-            args: Positional arguments in the order id,
+            args: Positional arguments in the order id, 
             craeted_at, updated_at, __class__.
         """
         if kwargs:
             for key, value in kwargs.items():
-                if key != '__class__':
-                    setattr(self, key, value)
-                elif key == 'id':
+                if key == 'id':
                     self.id = value
                 elif key == 'created_at':
                     dated = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
@@ -25,13 +23,15 @@ class BaseModel:
                 elif key == 'updated_at':
                     dated = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                     self.updated_at = dated
+                elif key != '__class__':
+                    setattr(self, key, value)
         else:
-            self.updated_at = self.created_at
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            from models import storage
+            self.updated_at = self.created_at
+            from models import storage 
             storage.new(self)
-    """str"""
+            
     def __str__(self):
         """string documentation"""
         return "[{}] ({}) {}".format(
@@ -40,7 +40,7 @@ class BaseModel:
     def save(self):
         """time saved"""
         self.updated_at = datetime.now()
-        from models import storage
+        from models import storage 
         storage.save()
 
     def to_dict(self):
