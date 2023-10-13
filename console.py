@@ -27,7 +27,34 @@ class  HBNBCommand(cmd.Cmd):
     }
     def emptyline(self):
         pass
+     
+    def default(self, line):
+        args = line.split(".")
+        if len(args) < 2:
+            print("Command not complete")
+            return
 
+        class_name = args[0]
+        class_func = args[1]
+        if class_name not in self.__classes:
+            print(f"** {class_name} class doesn't exist **")
+        else:
+            if class_func == "all()":
+                all_instances = storage.all(class_name)
+                instances = [str(instance) for instance in all_instances.values()]
+                self.print_instances(instances)
+            elif class_func == "count()":
+                 for obj in storage.all(class_name).values():
+                    count += 1
+                    print(count)
+            else:
+                print(f"** {class_func} is not a valid function for {class_name} **")
+
+    def print_instances(self, instances):
+        for instance in instances:
+            print(instance)
+            
+               
     def do_quit(self, line):
         """Exit the command prompt."""
         return True
@@ -166,15 +193,15 @@ class  HBNBCommand(cmd.Cmd):
                             print("** no instance found **")
                 except FileNotFoundError:
                     print("** no instance found **")
-    
-    def default(self, line):
-        """Handle User-related commands."""
-        args = line.split(".")
-        class_name = args[0]
-        func = args[1]
-        if class_name not in self.__classes:
-            print(f"** {class_name} class doesn't exist **")
-        else:
-            print("good")
+    def do_count(self, arg):
+        """Usage: count <class> or <class>.count()
+        Retrieve the number of instances of a given class."""
+        argl = parse(arg)
+        count = 0
+        for obj in storage.all().values():
+            if argl[0] == obj.__class__.__name__:
+                count += 1
+        print(count)
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
