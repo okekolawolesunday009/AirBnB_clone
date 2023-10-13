@@ -3,6 +3,13 @@ import cmd
 import json
 from models.base_model import BaseModel
 from models import storage
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
+from models.user import User
+
 
 class  HBNBCommand(cmd.Cmd):
     """Simple command processor example."""
@@ -10,8 +17,16 @@ class  HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     
     __classes = {
-        "BaseModel": BaseModel
+        "BaseModel": BaseModel,
+        "User": User,
+        "State" : State,
+        "City" : City,
+        "Place" : Place,
+        "Amenity" : Amenity,
+        "Review" : Review
     }
+    def emptyline(self):
+        pass
 
     def do_quit(self, line):
         """Exit the command prompt."""
@@ -23,6 +38,7 @@ class  HBNBCommand(cmd.Cmd):
         return True
     
     def do_create(self, line):
+        """creates instance of a class"""
         if not line:
             print("** class name missing **")
         else:
@@ -30,7 +46,7 @@ class  HBNBCommand(cmd.Cmd):
             if class_name in self.__classes:               
                 try:
                     # Assuming 'models' module has a BaseModel class
-                    new_instance = eval(f'{class_name}()')
+                    new_instance = self.__classes[class_name]()
                     storage.new(new_instance)  # Save to storage
                     storage.save()
                     print(new_instance.id)
@@ -40,12 +56,13 @@ class  HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
 
     def do_show(self, line):
+        """returns all obj property of a particular class model"""
         args = line.split()
         if not args:
              print("** class name missing **")
         else:
             class_name = args[0]
-            if class_name not in HBNBCommand.__classes:  # Add more class names as needed
+            if class_name not in HBNBCommand.__classes: 
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
@@ -66,12 +83,13 @@ class  HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
             
     def do_destroy(self, line):
+        """deletes a class of instance"""
         args = line.split()
         if not args:
              print("** class name missing **")
         else:
             class_name = args[0]
-            if class_name not in HBNBCommand.__classes:  # Add more class names as needed
+            if class_name not in HBNBCommand.__classes:  
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
@@ -92,37 +110,19 @@ class  HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
             
     def do_all(self, line):
-        """Print string representations of all instances based on class name or all classes."""
+        """shows all the insatnce of a class"""
         args = line.split()
-        if len(args) == 0:
-            # Handle the case when "all" is passed
-            try:
-                with open("file.json", "r") as file:
-                    data = json.load(file)
-                    for key, instance_dict in data.items():
-                        class_name = key.split('.')[0]
-                        instance = eval(class_name)(**instance_dict)
-                        print(instance)
-            except FileNotFoundError:
-                print("** no instance found **")
-        elif len(args) == 1:
-            # Handle the case when a class name is provided
+        if not args:
+            all_instances = storage.all()
+            instances = [str(instance) for instance in all_instances.values()]
+            print(instances)
+        elif args[0] in self.__classes:
             class_name = args[0]
-            if class_name not in HBNBCommand.__classes:  # Add more class names as needed
-                print("** class doesn't exist **")
-            else:
-                try:
-                    # Load instances from JSON file and filter by class name
-                    with open("file.json", "r") as file:
-                        data = json.load(file)
-                        instances = [v for k, v in data.items() if k.split('.')[0] == class_name]
-                        for instance_dict in instances:
-                            instance = eval(class_name)(**instance_dict)
-                            print(instance)
-                except FileNotFoundError:
-                    print("** no instance found **")
+            all_instances = storage.all(class_name)
+            instances = [str(instance) for instance in all_instances.values()]
+            print(instances)
         else:
-            print("** invalid command format **")
+            print("** class doesn't exist **")
 
     def do_update(self, line):
         """Update an instance based on the class name, id, attribute name, and value."""
@@ -166,6 +166,15 @@ class  HBNBCommand(cmd.Cmd):
                             print("** no instance found **")
                 except FileNotFoundError:
                     print("** no instance found **")
-
+    
+    def default(self, line):
+        """Handle User-related commands."""
+        args = line.split(".")
+        class_name = args[0]
+        func = args[1]
+        if class_name not in self.__classes:
+            print(f"** {class_name} class doesn't exist **")
+        else:
+            print("good")
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -4,14 +4,13 @@ import uuid
 from datetime import datetime
 
 
-
 class BaseModel:
     """class base doc"""
     def __init__(self, *args, **kwargs):
         """
         Update attributes using positional arguments.
         Args:
-            args: Positional arguments in the order width, height, x, y, id.
+            args: Positional arguments in the order id, craeted_at, updated_at, __class__.
         """
         if kwargs:
             for key, value in kwargs.items():
@@ -31,10 +30,12 @@ class BaseModel:
             storage.new(self)
             
     def __str__(self):
+        """string documentation"""
         return "[{}] ({}) {}".format(
             self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
+        """time saved"""
         self.updated_at = datetime.now()
         from models import storage 
         storage.save()

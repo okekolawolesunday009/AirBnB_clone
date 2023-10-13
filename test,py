@@ -8,6 +8,10 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 from models.user import User
+import uuid
+from datetime import datetime
+
+
 
 class FileStorage:
     """Class to serialize instances to JSON and deserialize JSON to instances."""
@@ -60,3 +64,8 @@ class FileStorage:
                         self.__objects[key] = obj_instance
         except FileNotFoundError:
             pass
+
+model = Base()
+model.name = "kolawole"
+model.number = 4
+print(model)
