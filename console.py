@@ -25,6 +25,7 @@ class  HBNBCommand(cmd.Cmd):
         "Amenity" : Amenity,
         "Review" : Review
     }
+
     def emptyline(self):
         pass
      
@@ -56,7 +57,7 @@ class  HBNBCommand(cmd.Cmd):
             
                
     def do_quit(self, line):
-        """Exit the command prompt."""
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, line):
