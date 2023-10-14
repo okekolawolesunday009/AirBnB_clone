@@ -45,9 +45,7 @@ class  HBNBCommand(cmd.Cmd):
                 instances = [str(instance) for instance in all_instances.values()]
                 self.print_instances(instances)
             elif class_func == "count()":
-                 for obj in storage.all(class_name).values():
-                    count += 1
-                    print(count)
+                self.do_count()
             else:
                 print(f"** {class_func} is not a valid function for {class_name} **")
 
@@ -194,13 +192,14 @@ class  HBNBCommand(cmd.Cmd):
                             print("** no instance found **")
                 except FileNotFoundError:
                     print("** no instance found **")
-    def do_count(self, arg):
+    def do_count(self, line):
         """Usage: count <class> or <class>.count()
         Retrieve the number of instances of a given class."""
-        argl = parse(arg)
+        args = line.split('.')
+        class_name = args[0]
         count = 0
-        for obj in storage.all().values():
-            if argl[0] == obj.__class__.__name__:
+        for obj in storage.all(class_name).values():
+            if obj.__class__.__name__ == class_name:
                 count += 1
         print(count)
 
