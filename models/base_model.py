@@ -10,16 +10,19 @@ class BaseModel:
         """
         Update attributes using positional arguments.
         Args:
-            args: Positional arguments in the order id, craeted_at, updated_at, __class__.
+            args: Positional arguments in the order id, 
+            craeted_at, updated_at, __class__.
         """
         if kwargs:
             for key, value in kwargs.items():
                 if key == 'id':
                     self.id = value
                 elif key == 'created_at':
-                    self.created_at = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    dated = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    self.created_at = dated
                 elif key == 'updated_at':
-                    self.updated_at = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    dated = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    self.updated_at = dated
                 elif key != '__class__':
                     setattr(self, key, value)
         else:
