@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" console modele"""
 import cmd
 import json
 from models.base_model import BaseModel
