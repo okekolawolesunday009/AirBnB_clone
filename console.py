@@ -31,6 +31,7 @@ class  HBNBCommand(cmd.Cmd):
         pass
      
     def default(self, line):
+        """default funcs"""
         args = line.split(".")
         if len(args) < 2:
             print("Command not complete")
@@ -47,6 +48,14 @@ class  HBNBCommand(cmd.Cmd):
                 all_instances = storage.all()
                 count = [str(instance) for k,instance in all_instances.items() if k.startswith(class_name)]
                 print(len(count))
+            elif class_func.startswith("show") :
+                id_ = class_func.split('"')[1]
+                self.do_show(f"{class_name} {id_}")
+            elif class_func.startswith("destroy") :
+                id_ = class_func.split('"')[1]
+                self.do_destroy(f"{class_name} {id_}")
+            elif class_func.startswith("update") :
+                print("update")
             else:
                 print(f"** {class_func} is not a valid function for {class_name} **")
                
