@@ -42,18 +42,13 @@ class  HBNBCommand(cmd.Cmd):
             print(f"** {class_name} class doesn't exist **")
         else:
             if class_func == "all()":
-                all_instances = storage.all(class_name)
-                instances = [str(instance) for instance in all_instances.values()]
-                self.print_instances(instances)
+                self.do_all((class_name))
             elif class_func == "count()":
-                self.do_count()
+                all_instances = storage.all()
+                count = [str(instance) for k,instance in all_instances.items() if k.startswith(class_name)]
+                print(len(count))
             else:
                 print(f"** {class_func} is not a valid function for {class_name} **")
-
-    def print_instances(self, instances):
-        for instance in instances:
-            print(instance)
-            
                
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -145,8 +140,8 @@ class  HBNBCommand(cmd.Cmd):
             print(instances)
         elif args[0] in self.__classes:
             class_name = args[0]
-            all_instances = storage.all(class_name)
-            instances = [str(instance) for instance in all_instances.values()]
+            all_instances = storage.all()
+            instances = [str(instance) for k,instance in all_instances.items() if k.startswith(class_name)]
             print(instances)
         else:
             print("** class doesn't exist **")
@@ -164,7 +159,7 @@ class  HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             class_name = args[0]
-            if class_name in self.__classes: 
+            if class_name not in self.__classes:  # Check if the class exists
                 print("** class doesn't exist **")
             else:
                 instance_id = args[1]
@@ -192,17 +187,9 @@ class  HBNBCommand(cmd.Cmd):
                         else:
                             print("** no instance found **")
                 except FileNotFoundError:
-                    print("** no instance found **")
-    def do_count(self, line):
-        """Usage: count <class> or <class>.count()
-        Retrieve the number of instances of a given class."""
-        args = line.split('.')
-        class_name = args[0]
-        count = 0
-        for obj in storage.all(class_name).values():
-            if obj.__class__.__name__ == class_name:
-                count += 1
-        print(count)
+                    print("** JSON file not found or empty **")
+
+    
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
