@@ -1,0 +1,28 @@
+section .places {
+    background-color: green;
+    
+}
+.article-container{
+    /* display: flex; */
+    flex: 1 0;
+    /* justify-content: center; */
+    
+}
+section .places h1{
+    font-size: 30px;
+
+}
+
+article{
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+   
+    /* flex-basis: 25%; */
+    border: 1px solid #FF5A5F;
+}
+article h2{
+    font-size: 30px;
+    text-align: center;
+    font-weight: 600;
+}

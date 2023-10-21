@@ -1,0 +1,12 @@
+header{
+    height: 70px;
+    width: 100%;
+    position: absolute; 
+    top: 0;
+}
+.img-header {
+    width: 160px;
+    height: 70px;
+    background-image: url('../images/hbnb.png'); /* Replace 'your-image.jpg' with the path to your image */
+    background-size: cover;
+}
